@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 @RestControllerAdvice
 public class RestExceptionHandler {
@@ -65,4 +66,11 @@ public class RestExceptionHandler {
 
         return ResponseEntity.status(status).body(body);
     }
+
+    @ExceptionHandler(NoResourceFoundException.class)
+ResponseEntity<Map<String, Object>> resourceNotFound(
+        NoResourceFoundException ex) {
+
+    return response(HttpStatus.NOT_FOUND, "Resource not found");
+}
 }
